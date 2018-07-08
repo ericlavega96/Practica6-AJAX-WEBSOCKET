@@ -448,6 +448,10 @@ public class Main {
             }
             return "";
         });
+
+            get("",(request,reponse)->{
+                return JSON;
+            });
     }
 
 
