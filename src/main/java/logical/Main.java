@@ -10,6 +10,7 @@ import spark.ModelAndView;
 import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -22,6 +23,7 @@ public class Main {
     private static String usernameUsuarioActual;
     private static String idArticuloActual;
 
+    public static List<org.eclipse.jetty.websocket.api.Session> usuariosConectados = new ArrayList<>();
 
     public static void main(String[] args) throws SQLException {
 
@@ -496,6 +498,16 @@ public class Main {
             if(!tags.contains(E.tagsTransform()))
                 tags.add(E.tagsTransform());
         return tags;
+    }
+
+    public static void enviarMensajeAClientesConectados(String mensaje, String color){
+        for(org.eclipse.jetty.websocket.api.Session sesionConectada : usuariosConectados){
+            try {
+                sesionConectada.getRemote().sendString(p(mensaje).withClass(color).render());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
