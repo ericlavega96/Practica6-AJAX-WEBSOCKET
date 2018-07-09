@@ -1,5 +1,8 @@
 package logical;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sun.istack.internal.NotNull;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,10 +13,13 @@ public class LikesArticulo implements Serializable {
     @Column(name="LIKESARTICULO_ID")
     private long id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "ARTICULO_ID")
     private Articulo articulo;
 
+    @JsonBackReference
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "USUARIO_ID")
     private Usuario usuario;

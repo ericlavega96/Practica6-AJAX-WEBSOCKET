@@ -1,4 +1,7 @@
 package logical;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -9,8 +12,12 @@ public class Comentario implements Serializable{
     @Column(name="COMENTARIO_ID")
     private long id;
     private String comentario;
+
+    @JsonBackReference
     @ManyToOne
     private Usuario autor;
+
+    @JsonBackReference
     @ManyToOne
     private Articulo articulo;
 

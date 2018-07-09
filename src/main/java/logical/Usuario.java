@@ -25,7 +25,7 @@ public class Usuario implements Serializable{
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "autor")
     private Set<Comentario> comentarios;
 
-    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Set<LikesArticulo> likeArticulo = new HashSet<>();
 
     public Usuario() {

@@ -1,5 +1,7 @@
 package logical;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.internal.NotNull;
 import servicios.ServiciosArticulos;
 
@@ -29,11 +31,17 @@ public class Articulo implements Serializable {
     private Usuario autor;
     @NotNull
     private Date fecha;
+
+    @JsonManagedReference
     @OneToMany(mappedBy = "articulo",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Comentario> listaComentarios;
+
+    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "ARTICULO_ETIQUETA", joinColumns = { @JoinColumn(name = "ARTICULO_ID") }, inverseJoinColumns = { @JoinColumn(name = "ETIQUETA_ID") })
     private Set<Etiqueta> listaEtiquetas;
+
+    @JsonManagedReference
     @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL)
     Set<LikesArticulo> likeArticulo = new HashSet<>();
 

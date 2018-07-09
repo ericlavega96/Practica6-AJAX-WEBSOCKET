@@ -1,5 +1,6 @@
 package logical;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.internal.NotNull;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Etiqueta implements Serializable{
 
     }
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "listaEtiquetas")
     private Set<Articulo> listaArticulo;
 

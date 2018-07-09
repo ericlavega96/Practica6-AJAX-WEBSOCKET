@@ -1,6 +1,7 @@
 package logical;
 
 
+import JSON.ObjectToJSON;
 import freemarker.template.Configuration;
 
 import org.jasypt.util.text.BasicTextEncryptor;
@@ -276,7 +277,7 @@ public class Main {
             attributes.put("titulo", "Artículo");
             attributes.put("logUser", logUser);
             attributes.put("articulo",miArticulo);
-            if (logUser.likeArticulo(miArticulo)) {
+            if (logUser != null && logUser.likeArticulo(miArticulo)) {
                 System.out.println("Like encontrado: " + logUser.likeArticulo(miArticulo));
                 attributes.put("like", "true");
             }
@@ -284,7 +285,7 @@ public class Main {
                 System.out.println("Disike no encontrado...");
                 attributes.put("like", null);
             }
-            if (logUser.dislikeArticulo(miArticulo)) {
+            if (logUser != null && logUser.dislikeArticulo(miArticulo)) {
                 System.out.println("Like encontrado: " + logUser.likeArticulo(miArticulo));
                 attributes.put("dislike", "true");
             }
@@ -452,9 +453,10 @@ public class Main {
 
 
         get("/JSON", (request, response) -> {
-            List<Articulo> misArticulos = ServiciosArticulos.getInstancia().findAllIndexado(1);
-            return misArticulos.get(0);
-        }, new JsonTransformer());
+            //List<Articulo> misArticulos = ServiciosArticulos.getInstancia().findAllIndexado(1);
+            List<Articulo> misArticulos = ServiciosArticulos.getInstancia().findAll();
+            return misArticulos;
+        }, new ObjectToJSON());
         
     }
 
