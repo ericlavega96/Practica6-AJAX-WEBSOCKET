@@ -22,7 +22,7 @@ public class Usuario implements Serializable{
 
     private boolean autor;
 
-    @OneToMany(mappedBy = "autor")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "autor")
     private Set<Comentario> comentarios;
 
     @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL)

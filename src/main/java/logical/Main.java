@@ -21,6 +21,7 @@ import static j2html.TagCreator.p;
 import static spark.Spark.*;
 
 
+
 public class Main {
 
 
@@ -449,9 +450,12 @@ public class Main {
             return "";
         });
 
-            get("",(request,reponse)->{
-                return JSON;
-            });
+
+        get("/JSON", (request, response) -> {
+            List<Articulo> misArticulos = ServiciosArticulos.getInstancia().findAllIndexado(1);
+            return misArticulos.get(0);
+        }, new JsonTransformer());
+        
     }
 
 
