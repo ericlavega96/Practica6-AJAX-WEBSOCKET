@@ -77,35 +77,19 @@ public class Main {
                         ServiciosUsuarios.getInstancia().find(Desencryptamiento(request.cookie("dcfgvhb2hjrkb2j289yhuij"))));
                 response.redirect("/");
             }
-            response.redirect("/home?page=1");
+            response.redirect("/home");
             return "";
         });
 
         get("/home", (request, response) -> {
             Usuario logUser = request.session(true).attribute("usuario");
             Map<String, Object> attributes = new HashMap<>();
-            int pagina = Integer.parseInt(request.queryParams("page"));
-            List<Articulo> misArticulos = ServiciosArticulos.getInstancia().findAllIndexado(pagina);
             List<String> tags = getTags(ServiciosEtiquetas.getInstancia().findAll());
-            double maxPage = Math.ceil((double)ServiciosArticulos.getInstancia().findAll().size()/5);
 
             attributes.put("titulo", "Página de artículos A&E");
             attributes.put("logUser", logUser);
             attributes.put("tagsCol1", tagsColumnas(2, 1, tags));
             attributes.put("tagsCol2", tagsColumnas(2, 2, tags));
-            attributes.put("articulos", misArticulos);
-            attributes.put("page", pagina);
-            if(pagina <= 1)
-                attributes.put("validP", null);
-            else
-                attributes.put("validP", "true");
-            if(pagina >= maxPage)
-                attributes.put("validN", null);
-            else
-                attributes.put("validN", "true");
-
-            attributes.put("prevPage", (pagina - 1));
-            attributes.put("nextPage", (pagina + 1));
 
             return new ModelAndView(attributes, "index.ftl");
         }, freeMarkerEngine);
@@ -457,7 +441,31 @@ public class Main {
             List<Articulo> misArticulos = ServiciosArticulos.getInstancia().findAll();
             return misArticulos;
         }, new ObjectToJSON());
-        
+
+        get("/pagina", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            int pagina = Integer.parseInt(request.queryParams("page"));
+            Usuario logUser = request.session(true).attribute("usuario");
+            List<Articulo> misArticulos = ServiciosArticulos.getInstancia().findAllIndexado(pagina);
+            double maxPage = Math.ceil((double)ServiciosArticulos.getInstancia().findAll().size()/5);
+
+            attributes.put("logUser", logUser);
+            attributes.put("articulos", misArticulos);
+            attributes.put("page", pagina);
+            if(pagina <= 1)
+                attributes.put("validP", null);
+            else
+                attributes.put("validP", "true");
+            if(pagina >= maxPage)
+                attributes.put("validN", null);
+            else
+                attributes.put("validN", "true");
+
+            attributes.put("prevPage", (pagina - 1));
+            attributes.put("nextPage", (pagina + 1));
+
+            return new ModelAndView(attributes, "pagina.ftl");
+        }, freeMarkerEngine);
     }
 
 

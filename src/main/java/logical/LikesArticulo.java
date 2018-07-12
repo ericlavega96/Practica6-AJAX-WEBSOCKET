@@ -19,9 +19,9 @@ public class LikesArticulo implements Serializable {
     private Articulo articulo;
 
     @JsonBackReference
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "USUARIO_ID")
+    @NotNull
     private Usuario usuario;
 
     @Column(name="isLIKE")
