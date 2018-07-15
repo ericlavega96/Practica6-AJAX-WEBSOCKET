@@ -261,7 +261,7 @@ public class Main {
             attributes.put("titulo", "Artículo");
             attributes.put("logUser", logUser);
             attributes.put("articulo",miArticulo);
-            if (logUser != null && logUser.likeArticulo(miArticulo)) {
+            if (logUser.likeArticulo(miArticulo)) {
                 System.out.println("Like encontrado: " + logUser.likeArticulo(miArticulo));
                 attributes.put("like", "true");
             }
@@ -269,7 +269,7 @@ public class Main {
                 System.out.println("Disike no encontrado...");
                 attributes.put("like", null);
             }
-            if (logUser != null && logUser.dislikeArticulo(miArticulo)) {
+            if (logUser.dislikeArticulo(miArticulo)) {
                 System.out.println("Like encontrado: " + logUser.likeArticulo(miArticulo));
                 attributes.put("dislike", "true");
             }
@@ -389,10 +389,13 @@ public class Main {
             try {
 
                 Usuario usuario = request.session(true).attribute("usuario");
-                Articulo articulo = ServiciosArticulos.getInstancia().find(Long.parseLong(idArticuloActual));
 
-                ServiciosLikes.getInstancia().deleteLikes(articulo,usuario);
-                ServiciosLikesArticulos.getInstancia().crear(new LikesArticulo(articulo,usuario,true));
+                if(usuario != null){
+                    Articulo articulo = ServiciosArticulos.getInstancia().find(Long.parseLong(idArticuloActual));
+
+                    ServiciosLikes.getInstancia().deleteLikes(articulo,usuario);
+                    ServiciosLikesArticulos.getInstancia().crear(new LikesArticulo(articulo,usuario,true));
+                }
 
                 response.redirect("/leerArticuloCompleto/" + idArticuloActual);
 
@@ -406,11 +409,12 @@ public class Main {
             try {
 
                 Usuario usuario = request.session(true).attribute("usuario");
-                Articulo articulo = ServiciosArticulos.getInstancia().find(Long.parseLong(idArticuloActual));
+                if(usuario != null) {
+                    Articulo articulo = ServiciosArticulos.getInstancia().find(Long.parseLong(idArticuloActual));
 
-                ServiciosLikes.getInstancia().deleteLikes(articulo,usuario);
-                ServiciosLikesArticulos.getInstancia().crear(new LikesArticulo(articulo,usuario,false));
-
+                    ServiciosLikes.getInstancia().deleteLikes(articulo, usuario);
+                    ServiciosLikesArticulos.getInstancia().crear(new LikesArticulo(articulo, usuario, false));
+                }
                 response.redirect("/leerArticuloCompleto/" + idArticuloActual);
 
             } catch (Exception e) {

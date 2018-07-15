@@ -29,8 +29,9 @@ public class ServiciosLikes extends MetodosDB<LikesArticulo>{
         query.setParameter("user", user);
         query.setParameter("articulo", articulo);
         List<LikesArticulo> resultado = query.getResultList();
-        for(LikesArticulo la : resultado)
-            eliminar(la.getId());
+        for(LikesArticulo la : resultado) {
+            em.remove(la.getId());
+        }
         return;
     }
 }
