@@ -2,19 +2,131 @@
 <html lang="en">
 
   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+      <title>${titulo}</title>
 
-    <title>${titulo}</title>
+      <!-- Bootstrap core CSS -->
+      <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Custom styles for this template -->
+      <link href="css/blog-home.css" rel="stylesheet">
+      <style>
+          .chatbubble {
+              position: fixed;
+              bottom: 0;
+              right: 30px;
+              transform: translateY(300px);
+              transition: transform .3s ease-in-out;
+          }
+          .chatbubble.opened {
+              transform: translateY(0)
+          }
+          .chatbubble .unexpanded {
+              display: block;
+              background-color: #e23e3e;
+              padding: 10px 15px 10px;
+              position: relative;
+              cursor: pointer;
+              width: 350px;
+              border-radius: 10px 10px 0 0;
+          }
+          .chatbubble .expanded {
+              height: 300px;
+              width: 350px;
+              background-color: #fff;
+              text-align: left;
+              padding: 10px;
+              color: #333;
+              text-shadow: none;
+              font-size: 14px;
+          }
+          .chatbubble .chat-window {
+              overflow: auto;
+          }
+          .chatbubble .loader-wrapper {
+              margin-top: 50px;
+              text-align: center;
+          }
+          .chatbubble .messages {
+              display: none;
+              list-style: none;
+              margin: 0 0 50px;
+              padding: 0;
+          }
+          .chatbubble .messages li {
+              width: 85%;
+              float: left;
+              padding: 10px;
+              border-radius: 5px 5px 5px 0;
+              font-size: 14px;
+              background: #c9f1e6;
+              margin-bottom: 10px;
+          }
+          .chatbubble .messages li .sender {
+              font-weight: 600;
+          }
+          .chatbubble .messages li.support {
+              float: right;
+              text-align: right;
+              color: #fff;
+              background-color: #e33d3d;
+              border-radius: 5px 5px 0 5px;
+          }
+          .chatbubble .chats .input {
+              position: absolute;
+              bottom: 0;
+              padding: 10px;
+              left: 0;
+              width: 100%;
+              background: #f0f0f0;
+              display: none;
+          }
+          .chatbubble .chats .input .form-group {
+              width: 80%;
+          }
+          .chatbubble .chats .input input {
+              width: 100%;
+          }
+          .chatbubble .chats .input button {
+              width: 20%;
+          }
 
-    <!-- Custom styles for this template -->
-    <link href="css/blog-home.css" rel="stylesheet">
+          .chatbubble .chats {
+              display: none;
+          }
+          .chatbubble .login-screen {
+              margin-top: 20px;
+              display: none;
+          }
+          .chatbubble .chats.active,
+          .chatbubble .login-screen.active {
+              display: block;
+          }
+      </style>
+      <script>
+          $(document).ready(function () {
+              $('.chatbubble').find('.unexpanded').click(function () {
+                  $('.chatbubble').toggleClass('opened');
+                  if($('.chatbubble').hasClass('opened'))
+                      showChatLogIn();
+
+                  $('.chatbubble').find('.unexpanded').find('.title').text(
+                          $('.chatbubble').hasClass('opened') ? 'Minimizar Chat' : 'Chat'
+                  );
+              });
+
+          });
+
+          function showChatLogIn() {
+              $('.chatbubble').find('.chat-window').find('.chats').removeClass('active');
+              $('.chatbubble').find('.chat-window').find('.login-screen').addClass('active');
+          }
+      </script>
   </head>
 
   <body>
@@ -113,7 +225,38 @@
 
       </div>
       <!-- /.row -->
-
+        <div class="chatbubble">
+            <div class="unexpanded">
+                <div class="title">Chat</div>
+            </div>
+            <div class="expanded chat-window">
+                <div class="login-screen container">
+                    <form id="loginScreenForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="fullname" placeholder="Nombre" required>
+                        </div>
+                        <button type="submit" class="btn btn-block btn-primary">Comenzar Chat</button>
+                    </form>
+                </div>
+                <div class="chats">
+                    <div class="loader-wrapper">
+                        <div class="loader">
+                            <span>{</span><span>}</span>
+                        </div>
+                    </div>
+                    <ul class="messages clearfix">
+                    </ul>
+                    <div class="input">
+                        <form class="form-inline" id="messageSupport">
+                            <div class="form-group">
+                                <input type="text" autocomplete="off" class="form-control" id="newMessage">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /.container -->
 
