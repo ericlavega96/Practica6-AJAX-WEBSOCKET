@@ -8,9 +8,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>${titulo}</title>
+    <title>Chats de Administrador</title>
       <style>
-          .chat-login-container{
+          .admin-chats-container{
               margin: auto;
           }
           button {
@@ -34,25 +34,16 @@
               margin-right: 40px;
               margin-top: 20px;
           }
-          .login-screen {
-              width: 100%;
-          }
-          .chat-login-container{
-              height: 700px;
-          }
-          #admin-list{
-              font-weight:bold;
-          }
           .form-group li{
               list-style-type: none;
           }
       </style>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/blog-home.css" rel="stylesheet">
+    <link href="/css/blog-home.css" rel="stylesheet">
 
   </head>
 
@@ -82,28 +73,14 @@
     <!-- Page Content -->
     <div class="container">
       <div class="row">
-
         <!-- Blog Entries Column -->
-        <div class="chat-login-container">
-          <h1 class="my-4">Iniciar Chat</h1>
-            <div class="login-screen container">
-                <form id="loginScreenForm" action="/procesarLogInChat" method="post">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="nombre" placeholder="Nombre" required>
-                        <br>
-                        <label id="admin-list">Seleccione un administrador:</label>
-                        <#list administradores as admin>
-                        <ul>
-                            <li>
-                                <label> ${admin.username}
-                                    <input type="checkbox" id="rbAdmin" name="rbAdmin" value= ${admin.username}>
-                                </label>
-                            </li>
-                        </ul>
-                        </#list>
-                    </div>
-                    <button type="submit" class="btn btn-block btn-primary">Comenzar Chat</button>
-                </form>
+        <div class="admin-chats-container">
+            <h1 class="my-4">Chat</h1>
+            <h3 >${administrador.nombre}</h3>
+            <div class="panel-body  msg_container_base" >
+                <div id="chat_panel">
+
+                </div>
             </div>
         </div>
       </div>
@@ -116,14 +93,19 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/vistaUsuarioChat.js" type="text/javascript"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="/js/fragmentoChat.js"></script>
+    <script src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/js/vistaUsuarioChat.js"></script>
     <script>
-        $(document).ready(function(){
-            $('input:checkbox').click(function() {
-                $('input:checkbox').not(this).prop('checked', false);
+        (function($){
+            $(window).on("load",function(){
+                $(".msg_container_base").mCustomScrollbar();
             });
-        });
+        })(jQuery);
     </script>
   </body>
 </html>

@@ -13,6 +13,7 @@ import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 import j2html.TagCreator;
 import j2html.tags.ContainerTag;
+import websocket.ManejadorDeMensajes;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -33,7 +34,7 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
-
+        webSocket("/mensajeServidor", ManejadorDeMensajes.class);
         staticFiles.location("/templates");
 
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_0);
@@ -481,7 +482,9 @@ public class Main {
 
         get("/chat/admin", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
-            attributes.put("logUser", request.session(true).attribute("usuario"));
+            Usuario logUser =  request.session(true).attribute("usuario");
+            attributes.put("logUser",logUser);
+            attributes.put("administrador", logUser);
             attributes.put("usuario", new UsuarioChat(request.queryParams("user"),false));
             return new ModelAndView(attributes, "chat.ftl");
         }, freeMarkerEngine);
@@ -503,6 +506,21 @@ public class Main {
             attributes.put("logUser", logUser);
             return new ModelAndView(attributes, "adminChats.ftl");
         }, freeMarkerEngine);
+
+        post("/procesarLogInChat", (request, response) -> {
+            try {
+                String nombreUsuarioChat = request.queryParams("nombre");
+                String adminChat =  request.queryParams("rbAdmin");
+                System.out.println("Administrador Seleccionado " + adminChat);
+                if(adminChat == null)
+                    response.redirect("/chatLogIn");
+                else
+                    response.redirect("/chat/" + adminChat +"/"+nombreUsuarioChat);
+            } catch (Exception e) {
+                System.out.println("Error al intentar iniciar comunicación con el administrador" + e.toString());
+            }
+            return "";
+        });
 
     }
 

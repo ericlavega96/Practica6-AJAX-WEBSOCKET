@@ -8,9 +8,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>${titulo}</title>
+    <title>Chats de Administrador</title>
       <style>
-          .chat-login-container{
+          .admin-chats-container{
               margin: auto;
           }
           button {
@@ -33,15 +33,6 @@
               margin:auto;
               margin-right: 40px;
               margin-top: 20px;
-          }
-          .login-screen {
-              width: 100%;
-          }
-          .chat-login-container{
-              height: 700px;
-          }
-          #admin-list{
-              font-weight:bold;
           }
           .form-group li{
               list-style-type: none;
@@ -82,28 +73,11 @@
     <!-- Page Content -->
     <div class="container">
       <div class="row">
-
         <!-- Blog Entries Column -->
-        <div class="chat-login-container">
-          <h1 class="my-4">Iniciar Chat</h1>
-            <div class="login-screen container">
-                <form id="loginScreenForm" action="/procesarLogInChat" method="post">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="nombre" placeholder="Nombre" required>
-                        <br>
-                        <label id="admin-list">Seleccione un administrador:</label>
-                        <#list administradores as admin>
-                        <ul>
-                            <li>
-                                <label> ${admin.username}
-                                    <input type="checkbox" id="rbAdmin" name="rbAdmin" value= ${admin.username}>
-                                </label>
-                            </li>
-                        </ul>
-                        </#list>
-                    </div>
-                    <button type="submit" class="btn btn-block btn-primary">Comenzar Chat</button>
-                </form>
+        <div class="admin-chats-container">
+          <h1 class="my-4">Chats</h1>
+            <div id="body" class="chats container">
+
             </div>
         </div>
       </div>
@@ -118,6 +92,7 @@
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/vistaAdminChat.js" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
             $('input:checkbox').click(function() {

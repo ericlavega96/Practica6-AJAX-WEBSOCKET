@@ -150,9 +150,15 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/publicarArticulo">Artículos</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/adminChats">Ver Chats</a>
+                            </li>
+                            <#else>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/chatLogIn">Chats</a>
+                                </li>
                         </#if>
                     </#if>
-
                     <#if logUser??>
                         <#if logUser.administrador>
                             <li class="nav-item">
@@ -166,12 +172,12 @@
                         </li>
                     <#else>
                         <li class="nav-item">
+                            <a class="nav-link" href="/chatLogIn">Chats</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/iniciarSesion">Iniciar sesión</a>
                         </li>
                     </#if>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/chatLogIn">Chat</a>
-                    </li>
                 </ul>
             </div>
         </div>
