@@ -95,6 +95,14 @@ public class FiltrosYCookies {
             }
         });
 
+        before("/chatLogIn", (request, response) -> {
+            // ... check if authenticated
+            Usuario logUser = request.session(true).attribute("usuario");
+            if (logUser != null && (logUser.isAdministrador() && logUser.isAutor())) {
+                response.redirect("/");
+            }
+        });
+
 
         /*get("/crearCookie/:nombreCookie/:valor", (request, response)->{
             //creando cookie en para un minuto

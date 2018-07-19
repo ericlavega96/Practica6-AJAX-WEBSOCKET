@@ -24,9 +24,9 @@ $(document).ready(function () {
         html+=    '<div class="col-md-10 col-xs-10 ">';
         html+=    '<div class="messages msg_sent">';
         if(self){
-            html+=    '<p><b>'+ info.usuario_origen +' dice:</b></p><p>' + info.mensaje + '</p>';
+            html+=    '<p><b>'+ info.origen +' dice:</b></p><p>' + info.mensaje + '</p>';
         }
-        else if (info.usuario_origen === "servidor"){
+        else if (info.origen === "servidor"){
             html+=    '<p><b><span style="color:red">'+ info.mensaje +' </b></span></p>';
         }
         else
@@ -45,9 +45,9 @@ $(document).ready(function () {
 
 function get_info (inicializando) {
     var info = {
-        inicializando: inicializando,
-        usuario_origen:$("#usuario").val(),
-        usuario_destino: $("#usuario_destino").val(),
+        iniciado: inicializando,
+        origen:$("#usuario").val(),
+        destinatario: $("#destinatario").val(),
         mensaje: $('#btn-input').val(),
     };
     return  JSON.stringify(info);

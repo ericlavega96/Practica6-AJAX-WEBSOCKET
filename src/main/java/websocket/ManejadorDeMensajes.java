@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
+import static j2html.TagCreator.p;
+
 @WebSocket
 public class ManejadorDeMensajes {
     /**
@@ -23,7 +25,6 @@ public class ManejadorDeMensajes {
     @OnWebSocketConnect
     public void conectando(Session usuario){
         System.out.println("Conectando Usuario: "+usuario.getLocalAddress().getAddress().toString());
-
     }
 
     /**
@@ -34,7 +35,6 @@ public class ManejadorDeMensajes {
      */
     @OnWebSocketClose
     public void cerrandoConexion(Session usuario, int statusCode, String reason) {
-        System.out.println("Desconectando el usuario: "+usuario.getLocalAddress().getAddress().toString());
         for(Iterator<Map.Entry<String, Session>> it = Main.usuariosDisponibles.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, Session> entry = it.next();
             if(entry.getValue().equals(usuario)) {
@@ -50,23 +50,19 @@ public class ManejadorDeMensajes {
      */
     @OnWebSocketMessage
     public void recibiendoMensaje(Session usuario, String message) throws IOException {
-        System.out.println("Recibiendo del cliente: " + usuario.getLocalAddress().getAddress().toString() + " - Mensaje" + message);
         Gson gson = new Gson();
         Mensajes mc = gson.fromJson(message, Mensajes.class);
 
-        if (mc.isIniciado()) {
-            Main.usuariosDisponibles.put(mc.getOrigen(), usuario);
+        if (mc.isIniciado()){
+            Main.usuariosDisponibles.put(mc.getOrigen(),usuario);
             return;
         }
-        Session session = Main.usuariosDisponibles.get(mc.getDestinatario());
-
-        session.getRemote().sendString(gson.toJson(mc));
-
-        /*if (session != null)
+        Session session = Main.usuariosDisponibles.get(mc.getOrigen());
+        if( session != null)
             session.getRemote().sendString(gson.toJson(mc));
-        else {
-            mc = new Mensajes("server", "", "Servidor", "EL USUARIO ACABA DE DESCONECTARSE...", false);
+        else{
+            mc = new Mensajes("Server","Servidor","","El usuario se ha desconectado",false);
             usuario.getRemote().sendString(gson.toJson(mc));
-        }*/
+        }
     }
 }
