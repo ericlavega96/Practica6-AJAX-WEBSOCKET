@@ -76,12 +76,12 @@ public class FiltrosYCookies {
             }
         });
 
-        before("/chatRoom/autor", (request, response) -> {
+        before("/chat/autor", (request, response) -> {
             if(ServiciosUsuarios.getInstancia().find(request.queryParams("admin"))==null)
                 response.redirect("/");
         });
 
-        before("/chatRoom/:admin/:user", (request, response) -> {
+        before("/chat/:admin/:user", (request, response) -> {
             if(ServiciosUsuarios.getInstancia().find(request.params("admin"))==null)
                 response.redirect("/");
         });
