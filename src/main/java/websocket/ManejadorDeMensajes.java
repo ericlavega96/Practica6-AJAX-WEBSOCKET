@@ -59,11 +59,14 @@ public class ManejadorDeMensajes {
             return;
         }
         Session session = Main.usuariosDisponibles.get(mc.getDestinatario());
-        if (session != null)
+
+        session.getRemote().sendString(gson.toJson(mc));
+
+        /*if (session != null)
             session.getRemote().sendString(gson.toJson(mc));
         else {
             mc = new Mensajes("server", "", "Servidor", "EL USUARIO ACABA DE DESCONECTARSE...", false);
             usuario.getRemote().sendString(gson.toJson(mc));
-        }
+        }*/
     }
 }

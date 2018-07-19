@@ -70,7 +70,6 @@ $(document).ready(function () {
         var div = document.createElement('div');
         div.innerHTML = html;
         document.getElementById("body").appendChild(div);
-        $(".msg_container_base").mCustomScrollbar();
         $("#send-msg-"+mensaje.usuario_origen).click(function(){
             var usuario_destino = $(this).attr("value")
             var info = {

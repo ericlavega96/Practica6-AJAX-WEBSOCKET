@@ -2,23 +2,23 @@ package logical;
 
 public class UsuarioChat {
 
-    private String nombreChat;
+    private String username;
     private boolean admin;
 
     public UsuarioChat() {
     }
 
-    public UsuarioChat(String nombreChat, boolean admin) {
-        this.nombreChat = nombreChat;
+    public UsuarioChat(String username, boolean admin) {
+        this.username = username;
         this.admin = admin;
     }
 
-    public String getNombreChat() {
-        return nombreChat;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNombreChat(String nombreChat) {
-        this.nombreChat = nombreChat;
+    public void setUsername(String nombreChat) {
+        this.username = nombreChat;
     }
 
     public boolean isAdmin() {

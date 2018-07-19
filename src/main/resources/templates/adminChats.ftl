@@ -70,6 +70,8 @@
         </div>
     </nav>
 
+    <input type="hidden" id="usuario" value="${logUser.username}">
+    <input type="hidden" id="nombre" value="${logUser.nombre}">
     <!-- Page Content -->
     <div class="container">
       <div class="row">

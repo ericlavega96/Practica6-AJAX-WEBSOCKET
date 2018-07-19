@@ -22,6 +22,6 @@ dependencies {
     compile "org.slf4j:slf4j-simple:1.7.21"
     compile 'org.jasypt:jasypt:1.9.2'
     compile 'com.google.code.gson:gson:2.8.5'
-    compile 'com.j2html:j2html:1.0.0'
+    compile 'com.j2html:j2html:1.2.0'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
 }

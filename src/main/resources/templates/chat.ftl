@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Chats de Administrador</title>
+    <title>Chats</title>
       <style>
           .admin-chats-container{
               margin: auto;
@@ -71,19 +71,29 @@
     </nav>
 
     <!-- Page Content -->
+    <input type="hidden" id="usuario" value="${usuario.username}">
+    <input type="hidden" id="usuario_destino" value="${administrador.username}">
     <div class="container">
       <div class="row">
         <!-- Blog Entries Column -->
         <div class="admin-chats-container">
             <h1 class="my-4">Chat</h1>
-            <h3 >${administrador.nombre}</h3>
+            <h3>${administrador.username}</h3>
             <div class="panel-body  msg_container_base" >
-                <div id="chat_panel">
-
-                </div>
+                <div id="chat_panel"></div>
             </div>
         </div>
       </div>
+    </div>
+    </div>
+    <div class="panel-footer">
+        <div class="input-group">
+            <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Escriba su mensaje..." />
+            <span class="input-group-btn">
+                <button class="btn btn-primary btn-sm" id="btn-chat">Enviar</button>
+            </span>
+        </div>
+    </div>
     </div>
     <footer class="py-5 bg-dark">
       <div class="container">
@@ -98,14 +108,5 @@
     <script src="/js/vistaUsuarioChat.js" type="text/javascript"></script>
     <script src="/vendor/bootstrap/js/bootstrap.js"></script>
     <script src="/js/fragmentoChat.js"></script>
-    <script src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="/js/vistaUsuarioChat.js"></script>
-    <script>
-        (function($){
-            $(window).on("load",function(){
-                $(".msg_container_base").mCustomScrollbar();
-            });
-        })(jQuery);
-    </script>
   </body>
 </html>
