@@ -481,15 +481,17 @@ public class Main {
 
         get("/chat/admin", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
-            attributes.put("administrador", request.session(true).attribute("usuario"));
+            attributes.put("logUser", request.session(true).attribute("usuario"));
             attributes.put("usuario", new UsuarioChat(request.queryParams("user"),false));
             return new ModelAndView(attributes, "chat.ftl");
         }, freeMarkerEngine);
 
         get("/chat/:admin/:user", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
+            Usuario logUser = request.session(true).attribute("usuario");
             Usuario admin = ServiciosUsuarios.getInstancia().find(request.params("admin"));
             UsuarioChat user = new UsuarioChat(request.params("user") , false);
+            attributes.put("logUser",logUser);
             attributes.put("usuario",user);
             attributes.put("administrador",admin);
             return new ModelAndView(attributes, "chat.ftl");
