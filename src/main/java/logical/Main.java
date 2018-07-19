@@ -472,26 +472,26 @@ public class Main {
         }, freeMarkerEngine);
 
 
-        get("/chatRoom", (request, response) -> {
+        get("/chat", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             return new ModelAndView(attributes, "admin-autorChatroom.ftl");
         }, freeMarkerEngine);
 
-        get("/administradoresConectados", (request, response) -> {
+        get("/adminDisponibles", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("usuario", new UsuarioChat(request.queryParams("user"),false));
             attributes.put("administradores", ServiciosUsuarios.getInstancia().findAllAdminsAutor());
             return new ModelAndView(attributes, "showAdmins.ftl");
         }, freeMarkerEngine);
 
-        get("/chatRoom/autor", (request, response) -> {
+        get("/chat/admin", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("usuario", new UsuarioChat(request.queryParams("user"),false));
             attributes.put("administrador", ServiciosUsuarios.getInstancia().find(request.queryParams("admin")));
             return new ModelAndView(attributes, "chatUser.ftl");
         }, freeMarkerEngine);
 
-        get("/chatRoom/:admin/:user", (request, response) -> {
+        get("/chat/:admin/:user", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             Usuario admin = ServiciosUsuarios.getInstancia().find(request.params("admin"));
             UsuarioChat user = new UsuarioChat(request.params("user") , false);
