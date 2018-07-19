@@ -1,6 +1,11 @@
 package servicios;
 
 import logical.Usuario;
+import logical.UsuarioChat;
+import spark.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static spark.Spark.*;
 
@@ -69,6 +74,16 @@ public class FiltrosYCookies {
             if (logUser == null || (!logUser.isAdministrador() && !logUser.isAutor())) {
                 response.redirect("/");
             }
+        });
+
+        before("/chatRoom/autor", (request, response) -> {
+            if(ServiciosUsuarios.getInstancia().find(request.queryParams("admin"))==null)
+                response.redirect("/");
+        });
+
+        before("/chatRoom/:admin/:user", (request, response) -> {
+            if(ServiciosUsuarios.getInstancia().find(request.params("admin"))==null)
+                response.redirect("/");
         });
 
 

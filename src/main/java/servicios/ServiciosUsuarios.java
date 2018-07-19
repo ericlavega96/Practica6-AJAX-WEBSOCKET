@@ -4,7 +4,9 @@ import logical.Usuario;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ServiciosUsuarios extends MetodosDB<Usuario>{
 
@@ -47,4 +49,15 @@ public class ServiciosUsuarios extends MetodosDB<Usuario>{
             return true;
         }
     }
+
+    public Set<Usuario> findAllAdminsAutor(){
+        List<Usuario> usuarios = findAll();
+        Set<Usuario> admins = new HashSet<>();
+
+        for(Usuario u : usuarios)
+            if(u.isAdministrador() || u.isAutor())
+                admins.add(u);
+        return admins;
+    }
+
 }

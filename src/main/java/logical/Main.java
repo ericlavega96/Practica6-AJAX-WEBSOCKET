@@ -29,7 +29,7 @@ public class Main {
     private static String usernameUsuarioActual;
     private static String idArticuloActual;
 
-    public static List<org.eclipse.jetty.websocket.api.Session> usuariosConectados = new ArrayList<>();
+    public static Map<String, org.eclipse.jetty.websocket.api.Session> usuariosDisponibles = new HashMap<>();
 
     public static void main(String[] args) throws SQLException {
 
@@ -470,6 +470,38 @@ public class Main {
 
             return new ModelAndView(attributes, "pagina.ftl");
         }, freeMarkerEngine);
+
+
+        get("/chatRoom", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            return new ModelAndView(attributes, "admin-autorChatroom.ftl");
+        }, freeMarkerEngine);
+
+        get("/administradoresConectados", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("usuario", new UsuarioChat(request.queryParams("user"),false));
+            attributes.put("administradores", ServiciosUsuarios.getInstancia().findAllAdminsAutor());
+            return new ModelAndView(attributes, "showAdmins.ftl");
+        }, freeMarkerEngine);
+
+        get("/chatRoom/autor", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("usuario", new UsuarioChat(request.queryParams("user"),false));
+            attributes.put("administrador", ServiciosUsuarios.getInstancia().find(request.queryParams("admin")));
+            return new ModelAndView(attributes, "chatUser.ftl");
+        }, freeMarkerEngine);
+
+        get("/chatRoom/:admin/:user", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            Usuario admin = ServiciosUsuarios.getInstancia().find(request.params("admin"));
+            UsuarioChat user = new UsuarioChat(request.params("user") , false);
+
+            attributes.put("administrador",admin);
+            attributes.put("usuario",user);
+
+            return new ModelAndView(attributes, "chatUser.ftl");
+        }, freeMarkerEngine);
+
     }
 
 
@@ -526,14 +558,6 @@ public class Main {
         return tags;
     }
 
-    public static void enviarMensajeAClientesConectados(String mensaje, String color){
-        for(org.eclipse.jetty.websocket.api.Session sesionConectada : usuariosConectados){
-            try {
-                sesionConectada.getRemote().sendString(p(mensaje).withClass(color).render());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
 
 }

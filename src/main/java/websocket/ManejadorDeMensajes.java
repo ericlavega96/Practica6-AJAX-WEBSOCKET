@@ -34,7 +34,7 @@ public class ManejadorDeMensajes {
     @OnWebSocketClose
     public void cerrandoConexion(Session usuario, int statusCode, String reason) {
         System.out.println("Desconectando el usuario: "+usuario.getLocalAddress().getAddress().toString());
-        for(Iterator<Map.Entry<String, Session>> it = Main.usuariosConectados.entrySet().iterator(); it.hasNext(); ) {
+        for(Iterator<Map.Entry<String, Session>> it = Main.usuariosDisponibles.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, Session> entry = it.next();
             if(entry.getValue().equals(usuario)) {
                 it.remove();
@@ -54,10 +54,10 @@ public class ManejadorDeMensajes {
         Mensajes mc = gson.fromJson(message, Mensajes.class);
 
         if (mc.isIniciado()) {
-            Main.usuariosConectados.put(mc.getOrigen(), usuario);
+            Main.usuariosDisponibles.put(mc.getOrigen(), usuario);
             return;
         }
-        Session session = Main.usuariosConectados.get(mc.getDestinatario());
+        Session session = Main.usuariosDisponibles.get(mc.getDestinatario());
         if (session != null)
             session.getRemote().sendString(gson.toJson(mc));
         else {
