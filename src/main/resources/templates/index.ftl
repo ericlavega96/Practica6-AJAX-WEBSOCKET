@@ -169,6 +169,9 @@
                             <a class="nav-link" href="/iniciarSesion">Iniciar sesión</a>
                         </li>
                     </#if>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/chatLogIn">Chat</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -239,11 +242,6 @@
                     </form>
                 </div>
                 <div class="chats">
-                    <div class="loader-wrapper">
-                        <div class="loader">
-                            <span>{</span><span>}</span>
-                        </div>
-                    </div>
                     <ul class="messages clearfix">
                     </ul>
                     <div class="input">

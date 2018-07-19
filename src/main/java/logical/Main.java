@@ -477,11 +477,12 @@ public class Main {
             return new ModelAndView(attributes, "admin-autorChatroom.ftl");
         }, freeMarkerEngine);
 
-        get("/administradoresConectados", (request, response) -> {
+        get("/chatLogIn", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
+            attributes.put("titulo", "Gestion de Usuarios-Artículos A&E");
             attributes.put("usuario", new UsuarioChat(request.queryParams("user"),false));
             attributes.put("administradores", ServiciosUsuarios.getInstancia().findAllAdminsAutor());
-            return new ModelAndView(attributes, "showAdmins.ftl");
+            return new ModelAndView(attributes, "chatLogIn.ftl");
         }, freeMarkerEngine);
 
         get("/chatRoom/autor", (request, response) -> {
