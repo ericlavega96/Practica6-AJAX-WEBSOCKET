@@ -76,14 +76,23 @@ public class FiltrosYCookies {
             }
         });
 
-        before("/chat/autor", (request, response) -> {
-            if(ServiciosUsuarios.getInstancia().find(request.queryParams("admin"))==null)
+        before("/chat/admin", (request, response) -> {
+            Usuario logUser = request.session(true).attribute("usuario");
+            if(logUser == null || (!logUser.isAdministrador() && !logUser.isAutor()))
                 response.redirect("/");
         });
 
         before("/chat/:admin/:user", (request, response) -> {
             if(ServiciosUsuarios.getInstancia().find(request.params("admin"))==null)
                 response.redirect("/");
+        });
+
+        before("/adminChats", (request, response) -> {
+            // ... check if authenticated
+            Usuario logUser = request.session(true).attribute("usuario");
+            if (logUser == null || (!logUser.isAdministrador() && !logUser.isAutor())) {
+                response.redirect("/");
+            }
         });
 
 

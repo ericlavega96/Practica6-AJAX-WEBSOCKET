@@ -472,35 +472,34 @@ public class Main {
         }, freeMarkerEngine);
 
 
-        get("/chatRoom", (request, response) -> {
-            Map<String, Object> attributes = new HashMap<>();
-            return new ModelAndView(attributes, "admin-autorChatroom.ftl");
-        }, freeMarkerEngine);
-
         get("/chatLogIn", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Gestion de Usuarios-Artículos A&E");
-            attributes.put("usuario", new UsuarioChat(request.queryParams("user"),false));
             attributes.put("administradores", ServiciosUsuarios.getInstancia().findAllAdminsAutor());
             return new ModelAndView(attributes, "chatLogIn.ftl");
         }, freeMarkerEngine);
 
-        get("/chatRoom/autor", (request, response) -> {
+        get("/chat/admin", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
+            attributes.put("administrador", request.session(true).attribute("usuario"));
             attributes.put("usuario", new UsuarioChat(request.queryParams("user"),false));
-            attributes.put("administrador", ServiciosUsuarios.getInstancia().find(request.queryParams("admin")));
-            return new ModelAndView(attributes, "chatUser.ftl");
+            return new ModelAndView(attributes, "chat.ftl");
         }, freeMarkerEngine);
 
-        get("/chatRoom/:admin/:user", (request, response) -> {
+        get("/chat/:admin/:user", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             Usuario admin = ServiciosUsuarios.getInstancia().find(request.params("admin"));
             UsuarioChat user = new UsuarioChat(request.params("user") , false);
-
-            attributes.put("administrador",admin);
             attributes.put("usuario",user);
+            attributes.put("administrador",admin);
+            return new ModelAndView(attributes, "chat.ftl");
+        }, freeMarkerEngine);
 
-            return new ModelAndView(attributes, "chatUser.ftl");
+        get("/adminChats", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            Usuario logUser = request.session(true).attribute("usuario");
+            attributes.put("logUser", logUser);
+            return new ModelAndView(attributes, "adminChats.ftl");
         }, freeMarkerEngine);
 
     }
